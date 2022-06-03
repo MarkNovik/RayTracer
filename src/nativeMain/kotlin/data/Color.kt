@@ -16,9 +16,9 @@ data class Color(
         val a = (alpha).toUInt()
 
         if (SDL_BYTEORDER == SDL_BIG_ENDIAN) {
-            (b shl 24) + (g shl 16) + (r shl 8) + a
+            (r shl 24) + (g shl 16) + (b shl 8) + a
         } else {
-            (a shl 24) + (r shl 16) + (g shl 8) + b
+            (a shl 24) + (b shl 16) + (g shl 8) + r
         }
     }
 

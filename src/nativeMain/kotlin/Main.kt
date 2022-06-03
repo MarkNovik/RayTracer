@@ -33,4 +33,3 @@ fun main() = window(
         })
     }
 }
-

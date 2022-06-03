@@ -6,6 +6,7 @@ group = "me.mark"
 version = "1.0"
 
 repositories {
+    maven("https://repo.kotlin.link")
     mavenCentral()
 }
 
@@ -37,7 +38,12 @@ kotlin {
         }
     }
     sourceSets {
-        val nativeMain by getting
+        val nativeMain by getting {
+            val kmath = "0.3.0"
+            dependencies {
+                implementation("space.kscience:kmath-for-real:$kmath")
+            }
+        }
         val nativeTest by getting
     }
 }

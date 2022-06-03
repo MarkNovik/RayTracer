@@ -1,6 +1,6 @@
 package math
 
-import kotlin.math.abs
+import kotlin.math.*
 
 const val EPSILON = 1e-21
 

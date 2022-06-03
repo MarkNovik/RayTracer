@@ -1,6 +1,7 @@
 package objects
 
 import data.Color
+import data.Intersection
 import math.Vector3
 import ray_tracing.Ray
 import kotlin.math.sqrt
@@ -21,7 +22,7 @@ class Sphere(override val color: Color = Color(255.0, 0.0, 0.0)) : Object {
             val intPoint =
                 if (t1 < t2) castRay.point1 + (vhat * t1)
                 else castRay.point1 + (vhat * t2)
-            return Intersection(intPoint, Vector3(), color)
+            return Intersection(intPoint, intPoint.normalized)
         }
         return null
     }

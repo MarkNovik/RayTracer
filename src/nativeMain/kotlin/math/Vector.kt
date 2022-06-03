@@ -1,6 +1,7 @@
 package math
 
 import kotlin.math.sqrt
+import kotlin.math.acos
 
 data class Vector3(
     val x: Double = 0.0,
@@ -10,6 +11,11 @@ data class Vector3(
 
     val length get() = sqrt(x * x + y * y + z * z)
     val normalized get() = this / length
+
+
+    fun angleWith(v: Vector3): Double {
+        return acos((this dot v) / this.length * v.length)
+    }
 
     operator fun plus(other: Vector3) = Vector3(
         this.x + other.x,
