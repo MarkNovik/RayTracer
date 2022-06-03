@@ -1,28 +1,36 @@
-import kotlinx.cinterop.alloc
-import kotlinx.cinterop.memScoped
-import kotlinx.cinterop.ptr
+import data.Color
+import data.Image
+import data.Position
+import data.Size
+import dsl.window
 import kotlinx.cinterop.toKString
-import sdl.*
+import math.Vector3
+import ray_tracing.Camera
+import ray_tracing.Scene
+import sdl.SDL_GetError
+import sdl.SDL_QUIT
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 
-fun main() = memScoped {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) sdlError("SDL INIT ERROR")
-    defer { SDL_Quit() }
+@OptIn(ExperimentalTime::class)
+fun main() = window(
+    title = "title",
+    position = Position.CENTERED,
+    size = Size(1280, 720),
+) {
+    val (width, height) = size
+    val image = Image(Size(width, height))
+    val scene = Scene()
 
-    val window =
-        SDL_CreateWindow("window", 0, 50, 800, 600, SDL_WINDOW_RESIZABLE) ?: sdlError("SDL WINDOW CREATING ERROR")
-    defer { SDL_DestroyWindow(window) }
+    scene.renderImage(image)
 
-    val renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED) ?: sdlError("SDL RENDERER CREATING ERROR")
-    defer { SDL_DestroyRenderer(renderer) }
-
-    //val keyboard = SDL_GetKeyboardState(null) ?: sdlError("SDL KEYBOARD STATE GETTING")
-
-    while (true) {
-        val event = alloc<SDL_Event>()
-        while (SDL_PollEvent(event.ptr) != 0) {
-            if (event.type == SDL_QUIT) return@memScoped
-        }
+    renderLoop { canvas ->
+        println(measureTime {
+            onEvent(SDL_QUIT) { stop() }
+            canvas.clear(Color.White)
+            scene.renderImage(image)
+            canvas.drawImage(image)
+        })
     }
 }
 
-inline fun sdlError(message: String): Nothing = error("$message: ${SDL_GetError()?.toKString()}")
