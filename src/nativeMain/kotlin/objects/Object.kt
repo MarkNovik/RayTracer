@@ -3,8 +3,11 @@ package objects
 import data.Color
 import ray_tracing.Ray
 import data.Intersection
+import ray_tracing.Transformation
 
-sealed interface Object {
+sealed class Object(
+    val transformation: Transformation,
     val color: Color
-    fun intersectWith(castRay: Ray): Intersection?
+) {
+    abstract fun intersectWith(castRay: Ray): Intersection?
 }

@@ -11,10 +11,11 @@ import sdl.SDL_GetError
 import sdl.SDL_QUIT
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
+import math.Matrix
 
 @OptIn(ExperimentalTime::class)
 fun main() = window(
-    title = "title",
+    title = "Ray Tracing",
     position = Position.CENTERED,
     size = Size(1280, 720),
 ) {
@@ -27,8 +28,8 @@ fun main() = window(
     renderLoop { canvas ->
         println(measureTime {
             onEvent(SDL_QUIT) { stop() }
-            canvas.clear(Color.White)
-            scene.renderImage(image)
+            //canvas.clear(Color.White)
+            //scene.renderImage(image)
             canvas.drawImage(image)
         })
     }

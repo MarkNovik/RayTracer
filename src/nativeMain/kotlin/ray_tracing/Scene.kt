@@ -8,6 +8,7 @@ import objects.Sphere
 import objects.Object
 import kotlin.math.max
 import kotlin.math.min
+import ray_tracing.Camera
 import ray_tracing.light.Light
 import ray_tracing.light.PointLight
 
@@ -22,11 +23,34 @@ class Scene {
     )
 
     private val objects = mutableListOf<Object>(
-        Sphere()
+        Sphere(
+            Transformation.by(
+                translation = Vector3(),
+                rotation = Vector3(),
+                scale = Vector3(1.0, 1.0, 1.0)
+            ),
+            Color(247.0, 111.0, 142.0)
+        ),
+        Sphere(
+            Transformation.by(
+                translation = Vector3(0.0, 0.0, 0.0),
+                rotation = Vector3(),
+                scale = Vector3(.75, .75, .75)
+            ),
+            Color(168.0, 249.0, 255.0)
+        ),
+        Sphere(
+            Transformation.by(
+                translation = Vector3(0.0, 0.0, 0.0),
+                rotation = Vector3(),
+                scale = Vector3(.5, .5, .5)
+            ),
+            Color(156.0, 208.0, 143.0)
+        )
     )
 
     private val lightList = mutableListOf<Light>(
-        PointLight(Vector3(5.0, -10.0, 5.0), Color(255.0, 255.0, 255.0))
+        PointLight(Vector3(5.0, -10.0, -5.0), Color(255.0, 255.0, 255.0))
     )
 
     fun renderImage(output: Image): Boolean {
@@ -62,14 +86,13 @@ class Scene {
                                 b * intensity
                             )
                         }
-                        //output[x, y] = Color(r - ((dist - 9) / 0.94605) * 255.0, g - ((dist - 9) / 0.94605) * 255.0, b - ((dist - 9) / 0.94605) * 255.0)
                     }                
                 }
             }
         }
 
-        println("minDist = $minDist")
-        println("maxDist = $maxDist")
+        //println("minDist = $minDist")
+        //println("maxDist = $maxDist")
 
         return true
     }

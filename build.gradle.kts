@@ -10,6 +10,10 @@ repositories {
     mavenCentral()
 }
 
+task("mathTest") {
+    println("Math")
+}
+
 kotlin {
     val hostOs = System.getProperty("os.name")
     val isMingwX64 = hostOs.startsWith("Windows")
@@ -38,12 +42,7 @@ kotlin {
         }
     }
     sourceSets {
-        val nativeMain by getting {
-            val kmath = "0.3.0"
-            dependencies {
-                implementation("space.kscience:kmath-for-real:$kmath")
-            }
-        }
+        val nativeMain by getting
         val nativeTest by getting
     }
 }
